@@ -1,0 +1,102 @@
+
+## Entornos virtuales (Windows)
+
+Esta guía describe cómo crear y usar entornos virtuales en Windows (PowerShell y CMD), cómo integrarlos con VS Code y Jupyter, y cómo ejecutar tu aplicación Streamlit localmente.
+
+### Requisitos previos
+- Python 3.8+ instalado (asegúrate de que `python` apunte a la versión correcta).
+- pip instalado (viene con Python normalmente).
+- (Opcional) VS Code con la extensión de Python instalada.
+
+### Crear y activar un entorno virtual (CMD)
+```cmd
+cd C:\Users\josej\Documents\streamlit_test
+python -m venv venv
+venv\Scripts\activate.bat
+```
+
+### Instalar dependencias y ejecutar
+1. Con el entorno virtual activado (PowerShell o CMD):
+```powershell
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+2. Ejecutar Streamlit:
+```powershell
+streamlit run app.py
+```
+3. Desactivar el entorno cuando termines:
+```powershell
+deactivate
+```
+
+### Usar el entorno sin activarlo
+```powershell
+C:\Users\josej\Documents\streamlit_test\.venv\Scripts\python -m pip install -r requirements.txt
+C:\Users\josej\Documents\streamlit_test\.venv\Scripts\python -m streamlit run app.py
+```
+
+### Jupyter / Notebooks
+1. Instala ipykernel en el entorno activo:
+```powershell
+pip install ipykernel
+python -m ipykernel install --user --name streamlit_test_venv --display-name "Python (streamlit_test)"
+```
+2. Selecciona ese kernel en Jupyter para que las celdas usen el mismo entorno.
+
+### Integración con VS Code
+- Abre la carpeta del proyecto en VS Code.
+- Abre la paleta: `Ctrl+Shift+P` → `Python: Select Interpreter` → selecciona `.../.venv/Scripts/python.exe`.
+- Con el intérprete seleccionado, el terminal integrado y notebooks usarán el venv.
+
+### Actualizar `requirements.txt`
+```powershell
+pip freeze > requirements.txt
+```
+
+### Añadir `.venv` a `.gitignore`
+No incluyas la carpeta del entorno en el repositorio. En `.gitignore`, añade:
+```
+.venv/
+venv/
+```
+
+### Alternativas (breve)
+- pipenv:
+```powershell
+pip install pipenv
+pipenv install
+pipenv shell
+```
+- poetry:
+```powershell
+pip install poetry
+poetry init
+poetry add streamlit pandas plotly
+poetry install
+poetry run streamlit run app.py
+```
+- conda (si usas Anaconda/Miniconda):
+```powershell
+conda create -n myenv python=3.10
+conda activate myenv
+pip install -r requirements.txt
+```
+
+### Problemas comunes y soluciones
+- Error de ejecución en PowerShell: usa `Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned`.
+- `pip` o `python` apunta a otra versión: usa la ruta absoluta del ejecutable del entorno (ej. `.venv\Scripts\python`).
+- Paquetes faltantes: reinstala con `pip install -r requirements.txt` dentro del entorno.
+
+### Consejos finales
+- Mantén `requirements.txt` actualizado con `pip freeze > requirements.txt`.
+- Usa `.venv` en la raíz del proyecto para que VS Code lo detecte.
+- Considera `poetry` para gestión avanzada de dependencias y bloqueo de versiones.
+
+Si quieres, puedo:
+1) Añadir automáticamente `.venv/` a `.gitignore`.
+2) Añadir comandos útiles a un `scripts` (por ejemplo, en PowerShell) o un `Makefile`.
+3) Registrar e instalar el kernel de Jupyter para tu notebook `EDA.ipynb`.
+
+---
+Nota: Estos comandos están escritos para Windows; ajusta rutas y comandos si trabajas en macOS o Linux.
