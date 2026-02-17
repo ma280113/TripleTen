@@ -1,2 +1,2 @@
 # TripleTen
-All contributions from the curse
+All contributions from the curse from exercises to proyects
